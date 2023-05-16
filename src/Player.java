@@ -3,6 +3,9 @@ public class Player {
     int y = 2;
     String symbol = "◎";
 
+    public Player() {
+
+    }
     public Player(int x, int y, String symbol) {
         this.x = x;
         this.y = y;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class main {
-    static Player player;
+    static Player player = new Player();
     static int currentRoomNumber = 2;
     static Scanner kb = new Scanner(System.in);
     static ArrayList<String> mapList = new ArrayList<>();
@@ -43,6 +43,7 @@ public class main {
     }
 
     public static void drawRoom() {
+        System.out.println("");
         for (int i = 0; i < currentRoom.size(); i++) {
             System.out.println(currentRoom.get(i));
         }
@@ -59,22 +60,32 @@ public class main {
 
     public static void swapCharBetweenStrings(int xPosition1, int xPosition2, int yPosition1, int yPosition2) {
         String ut1;
-        String ut2 = "";
-        char ch1C = currentRoom.get(yPosition1).charAt(xPosition1);
-        char ch2C = currentRoom.get(yPosition2).charAt(xPosition2);
+        String ut2;
+        String word1 = currentRoom.get(yPosition1);
+        String word2 = currentRoom.get(yPosition2);
+        char ch1C = word1.charAt(xPosition1);
+        char ch2C = word2.charAt(xPosition2);
 
         if (yPosition1 != yPosition2) {
-            ut1 = currentRoom.get(yPosition1).substring(0, xPosition1) + ch2C + currentRoom.get(yPosition1).substring(xPosition1 + 1);
-            ut2 = currentRoom.get(yPosition2).substring(0, xPosition2) + ch1C + currentRoom.get(yPosition2).substring(xPosition2 + 1);
+            ut1 = word1.substring(0, xPosition1) + ch2C + word1.substring(xPosition1 + 1);
+            ut2 = word2.substring(0, xPosition2) + ch1C + word2.substring(xPosition2 + 1);
 
-            currentRoom.add(yPosition2, ut2);
-            currentRoom.add(yPosition1, ut1);
+            currentRoom.set(yPosition2, ut2);
+            currentRoom.set(yPosition1, ut1);
+        } else if (xPosition2 < xPosition1) {
+            ut1 = word1.substring(0, xPosition2) + ch1C + word1.substring(xPosition2+1, xPosition1) + ch2C;
+            if (word1.length() != xPosition1+1) {
+                ut1 += word1.substring(xPosition1+1);
+                currentRoom.set(yPosition1, ut1);
+            }
         } else {
-            ut1 = currentRoom.get(yPosition1).substring(0, xPosition1) + ch2C + currentRoom.get(yPosition1).substring(xPosition1+1, xPosition2) + ch1C;
-            if (currentRoom.get(yPosition1).length() != xPosition2+1) ut1 += currentRoom.get(yPosition1).substring(xPosition2+1);
+            ut1 = word1.substring(0, xPosition1) + ch2C + word1.substring(xPosition1+1, xPosition2) + ch1C;
+            if (word1.length() != xPosition2+1) ut1 += word1.substring(xPosition2+1);
 
-            currentRoom.add(yPosition1, ut1);
+            currentRoom.set(yPosition1, ut1);
         }
+        player.x = xPosition2;
+        player.y = yPosition2;
     }
 
     public static void update() {
@@ -84,6 +95,14 @@ public class main {
             System.out.println(" ... ");
         } else if (commnad.equals("up")) {
             swapCharBetweenStrings(player.x, player.x, player.y, player.y-1);
+        } else if (commnad.equals("down")) {
+            swapCharBetweenStrings(player.x, player.x, player.y, player.y+1);
+        } else if (commnad.equals("right")) {
+            swapCharBetweenStrings(player.x, player.x+1, player.y, player.y);
+        } else if (commnad.equals("left")) {
+            swapCharBetweenStrings(player.x, player.x-1, player.y, player.y);
+        } else {
+            System.out.println("Invalid command!");
         }
         drawRoom();
     }
@@ -92,12 +111,14 @@ public class main {
         String playerPosition = "";
         playerPosition = currentRoom.get(player.y).substring(0, player.x) + player.symbol;
         if (currentRoom.get(player.y).length() != player.x+1) playerPosition += currentRoom.get(player.y).substring(player.x+1);
+        currentRoom.remove(player.y);
         currentRoom.add(player.y,playerPosition);
     }
 
     public static void main(String[] args) {
         boolean running = true;
-        readFile();
+        main spel = new main();
+        spel.readFile();
         readRoom();
         placePlayer();
         drawRoom();
