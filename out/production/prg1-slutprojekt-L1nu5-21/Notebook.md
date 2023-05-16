@@ -10,8 +10,11 @@ Add currentRoomReader and drawRoom methods. |
 
 Add grid-based movement along the x- and y-axis. |
 
-## $$$ Profit $$$
-MoneyGain cheat!
+## Notes
+
+#### 2023-05-09
+Added a charachter swap function for swaping two charachters within a string.
+
 
 ## Post Mortem
 
