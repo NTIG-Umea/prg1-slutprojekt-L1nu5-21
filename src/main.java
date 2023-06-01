@@ -1,15 +1,15 @@
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class main {
     static Player player = new Player();
-    static int currentRoomNumber = 2;
+    static int currentRoomNumber = 1;
     static Scanner kb = new Scanner(System.in);
     static ArrayList<String> mapList = new ArrayList<>();
     static ArrayList<String> currentRoom = new ArrayList<>();
+
+    static ArrayList<String> movementMap = new ArrayList<>();
 
     public static Scanner createFileScanner() {
         Scanner scan;
@@ -42,11 +42,34 @@ public class main {
         return currentRoom;
     }
 
+    public static ArrayList readMovementMap() {
+        String currentRow = "";
+
+        for (int i = 0; i < currentRoom.size(); i++) {
+            for (int j = 0; j < currentRoom.get(i).length(); j++) {
+                if (currentRoom.get(i).charAt(j) == '■') {
+                    currentRow += "1";
+                } else {
+                    currentRow += "0";
+                }
+            }
+            movementMap.add(currentRow);
+            if (currentRow.length() >= 18) {
+                currentRow = "";
+            }
+        }
+        return movementMap;
+    }
+
     public static void drawRoom() {
         System.out.println("");
         for (int i = 0; i < currentRoom.size(); i++) {
             System.out.println(currentRoom.get(i));
         }
+    }
+
+    public static int swapRoom(int roomNumber) {
+        return currentRoomNumber = roomNumber;
     }
 
     public static String swapChar(String in, int xPosition1, int xPosition2) {
@@ -89,18 +112,35 @@ public class main {
     }
 
     public static void update() {
+        System.out.println("Type 'Command list' for a list of commands.");
         System.out.println("Insert command: ");
         String commnad = kb.nextLine();
-        if (commnad.equals("Command list")) {
-            System.out.println(" ... ");
-        } else if (commnad.equals("up")) {
-            swapCharBetweenStrings(player.x, player.x, player.y, player.y-1);
-        } else if (commnad.equals("down")) {
-            swapCharBetweenStrings(player.x, player.x, player.y, player.y+1);
-        } else if (commnad.equals("right")) {
-            swapCharBetweenStrings(player.x, player.x+1, player.y, player.y);
-        } else if (commnad.equals("left")) {
-            swapCharBetweenStrings(player.x, player.x-1, player.y, player.y);
+        if (commnad.equalsIgnoreCase("Command list")) {
+            System.out.println("up, down, right, left, ... .");
+        } else if (commnad.equalsIgnoreCase("up")) {
+            if (movementMap.get(player.y-1).charAt(player.x) == '1') {
+                swapCharBetweenStrings(player.x, player.x, player.y, player.y - 1);
+            } else {
+                System.out.println("You cant walk on water!");
+            }
+        } else if (commnad.equalsIgnoreCase("down")) {
+            if (movementMap.get(player.y+1).charAt(player.x) == '1') {
+                swapCharBetweenStrings(player.x, player.x, player.y, player.y+1);
+            } else {
+                System.out.println("You cant walk on water!");
+            }
+        } else if (commnad.equalsIgnoreCase("right")) {
+            if (movementMap.get(player.y).charAt(player.x+1) == '1') {
+                swapCharBetweenStrings(player.x, player.x+1, player.y, player.y);
+            } else {
+                System.out.println("You cant walk on water!");
+            }
+        } else if (commnad.equalsIgnoreCase("left")) {
+            if (movementMap.get(player.y).charAt(player.x-1) == '1') {
+                swapCharBetweenStrings(player.x, player.x-1, player.y, player.y);
+            } else {
+                System.out.println("You cant walk on water!");
+            }
         } else {
             System.out.println("Invalid command!");
         }
@@ -120,6 +160,7 @@ public class main {
         main spel = new main();
         spel.readFile();
         readRoom();
+        readMovementMap();
         placePlayer();
         drawRoom();
         while (running) {

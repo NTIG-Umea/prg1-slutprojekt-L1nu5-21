@@ -1,9 +1,9 @@
 [room 1]
-xooooooooooooooooooo
-xooooooooooooooooooo
-xxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxx
+≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋
+≋≋≋≋≋■■■■■■■■■≋≋≋≋≋
+≋≋≋■■■■■■■■■■■■≋≋≋≋
+≋≋≋≋≋≋■■■■■■■■≋≋≋≋≋
+≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋
 
 [room 2]
 ≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋
@@ -13,10 +13,8 @@ xxxxxxxxxxxxxxxxxxxx
 ≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋
 
 [room 3]
-xxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxx
-
-[end]
+≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋
+≋≋≋≋≋■■■■■■■■■≋≋≋≋≋
+≋≋≋■■■■■■■■■■■■≋≋≋≋
+≋≋≋≋≋≋■■■■■■■■≋≋≋≋≋
+≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋
